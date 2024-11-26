@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ import java.util.List;
 public class ResidentController {
     private final ResidentRepository residentRepository;
 
-    @GetMapping
+    @GetMapping("/_search")
     private ResponseEntity<Page<Resident>> getAll(
             @RequestParam("pageNumber") int pageNumber,
             @RequestParam("pageSize") int pageSize,
@@ -40,9 +41,18 @@ public class ResidentController {
         return ResponseEntity.ok().body(residents);
     }
 
+    @GetMapping
+    private ResponseEntity<List<Resident>> getAll() {
+        return ResponseEntity.ok().body(residentRepository.findAll());
+    }
+
     @PostMapping
-    private void create(@RequestBody Resident resident) {
+    private ResponseEntity<?> create(@RequestBody Resident resident) {
+        if (residentRepository.existsByCccd(resident.getCccd())) {
+            return ResponseEntity.status(409).body(HttpStatus.CONFLICT);
+        }
         residentRepository.save(resident);
+        return ResponseEntity.ok().body(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
