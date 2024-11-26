@@ -15,9 +15,13 @@ const baseUrl = 'http://localhost:8080/api/v1/apartments';
     create(data: any): Observable<any> {
         return this.http.post(baseUrl, data);
     };
+
+    getAll(): Observable<Apartment[]> {
+      return this.http.get<Apartment[]>(baseUrl);
+    };
     
-      getAll(params: any): Observable<any> {
-        return this.http.get<any>(baseUrl, { params });
+      search(params: any): Observable<any> {
+        return this.http.get<any>(baseUrl + "/_search", { params });
       }
 
       get(id: any): Observable<Apartment> {

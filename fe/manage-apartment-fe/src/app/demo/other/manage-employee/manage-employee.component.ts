@@ -4,19 +4,20 @@ import { Component, OnInit } from '@angular/core';
 // project import
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 
-import { ApartmentService } from 'src/app/services/apartment.service';
-import { Apartment } from 'src/app/models/apartment.models';
+import { Resident } from 'src/app/models/resident.models';
+import { EmployeeService } from 'src/app/services/employee.service';
+import { Employee } from 'src/app/models/employee.models';
 
 @Component({
-  selector: 'app-manage-apartment',
+  selector: 'app-manage-employee',
   standalone: true,
   imports: [SharedModule],
-  templateUrl: './manage-apartment.component.html',
-  styleUrls: ['./manage-apartment.component.scss']
+  templateUrl: './manage-employee.component.html',
+  styleUrls: ['./manage-employee.component.scss']
 })
-export default class SamplePageComponent implements OnInit {
+export class RootComponent implements OnInit {
   constructor(
-    private apartmentService: ApartmentService,
+    private service: EmployeeService,
   ) { }
 
   ngOnInit(): void {
@@ -24,12 +25,12 @@ export default class SamplePageComponent implements OnInit {
   }
 
   retrieveTutorials(): void {
-    const params = this.getRequestParams(this.residentName, this.page, this.pageSize);
+    const params = this.getRequestParams(this.name, this.page, this.pageSize);
 
-    this.apartmentService.search(params)
+    this.service.search(params)
       .subscribe({
         next: (response) => {
-          this.apartments = response.content;
+          this.employees = response.content;
           this.count = response.totalElements;
           console.log("data", response);
         },
@@ -38,7 +39,7 @@ export default class SamplePageComponent implements OnInit {
   }
 
   delete(id: number) {
-    this.apartmentService.delete(id)
+    this.service.delete(id)
       .subscribe({
         next: (res) => {
           this.retrieveTutorials();
@@ -47,18 +48,17 @@ export default class SamplePageComponent implements OnInit {
       });
   }
 
-  apartments: Apartment[] = [];
-  currentIndex = -1;
-  residentName = '';
+  employees: Employee[] = [];
+  name = '';
 
   page = 1;
   count = 0;
   pageSize = 5;
 
-  getRequestParams(residentName: string, page: number, pageSize: number): any {
+  getRequestParams(name: string, page: number, pageSize: number): any {
     let params: any = {};
 
-      params[`resident_name`] = residentName;
+      params[`name`] = name;
 
     if (page) {
       params[`pageNumber`] = page - 1;
@@ -86,5 +86,4 @@ export default class SamplePageComponent implements OnInit {
     this.page = 1;
     this.retrieveTutorials();
   }
-
 }

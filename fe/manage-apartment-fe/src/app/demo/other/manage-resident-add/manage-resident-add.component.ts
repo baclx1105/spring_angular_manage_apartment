@@ -36,7 +36,7 @@ export default class SamplePageComponent {
     
     this.residentService.create(data).subscribe({
       next: (res) => {
-        console.log(res);
+        console.log("res", res);
         this.resident = {
           name: '',
           gender: '',
@@ -45,7 +45,10 @@ export default class SamplePageComponent {
           phoneNumber: '',
         }
       },
-      error: (e) => console.error(e)
+      error: (e) => {
+        alert("Not allow for duplicate cccd field");
+        console.error("e", e)
+      }
     });
   }
 }

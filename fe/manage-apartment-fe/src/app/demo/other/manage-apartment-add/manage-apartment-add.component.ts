@@ -8,7 +8,6 @@ import { ApartmentService } from 'src/app/services/apartment.service';
 import { ResidentService } from 'src/app/services/resident.service';
 
 import { Resident } from 'src/app/models/resident.models';
-import { log } from 'console';
 
 @Component({
   selector: 'app-manage-apartment-add',
@@ -55,7 +54,9 @@ export default class SamplePageComponent implements OnInit {
           residentName: '',
         }
       },
-      error: (e) => console.error(e)
+      error: (e) => {
+          alert("Not allow for dulicate numberOfApartment field")
+      }
     });
   }
 

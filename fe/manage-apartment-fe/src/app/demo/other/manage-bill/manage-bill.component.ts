@@ -4,19 +4,19 @@ import { Component, OnInit } from '@angular/core';
 // project import
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 
-import { ApartmentService } from 'src/app/services/apartment.service';
-import { Apartment } from 'src/app/models/apartment.models';
+import { Bill } from 'src/app/models/bill.models';
+import { BillService } from 'src/app/services/bill.service';
 
 @Component({
-  selector: 'app-manage-apartment',
+  selector: 'app-manage-bill',
   standalone: true,
   imports: [SharedModule],
-  templateUrl: './manage-apartment.component.html',
-  styleUrls: ['./manage-apartment.component.scss']
+  templateUrl: './manage-bill.component.html',
+  styleUrls: ['./manage-bill.component.scss']
 })
-export default class SamplePageComponent implements OnInit {
+export class RootComponent implements OnInit {
   constructor(
-    private apartmentService: ApartmentService,
+    private billService: BillService,
   ) { }
 
   ngOnInit(): void {
@@ -24,12 +24,12 @@ export default class SamplePageComponent implements OnInit {
   }
 
   retrieveTutorials(): void {
-    const params = this.getRequestParams(this.residentName, this.page, this.pageSize);
+    const params = this.getRequestParams(this.codeBill, this.page, this.pageSize);
 
-    this.apartmentService.search(params)
+    this.billService.search(params)
       .subscribe({
         next: (response) => {
-          this.apartments = response.content;
+          this.bills = response.content;
           this.count = response.totalElements;
           console.log("data", response);
         },
@@ -37,8 +37,8 @@ export default class SamplePageComponent implements OnInit {
       });
   }
 
-  delete(id: number) {
-    this.apartmentService.delete(id)
+  deleteResident(id: number) {
+    this.billService.delete(id)
       .subscribe({
         next: (res) => {
           this.retrieveTutorials();
@@ -47,18 +47,17 @@ export default class SamplePageComponent implements OnInit {
       });
   }
 
-  apartments: Apartment[] = [];
-  currentIndex = -1;
-  residentName = '';
+  bills: Bill[] = [];
+  codeBill = '';
 
   page = 1;
   count = 0;
   pageSize = 5;
 
-  getRequestParams(residentName: string, page: number, pageSize: number): any {
+  getRequestParams(codeBill: string, page: number, pageSize: number): any {
     let params: any = {};
 
-      params[`resident_name`] = residentName;
+      params[`codeBill`] = codeBill;
 
     if (page) {
       params[`pageNumber`] = page - 1;
@@ -86,5 +85,4 @@ export default class SamplePageComponent implements OnInit {
     this.page = 1;
     this.retrieveTutorials();
   }
-
 }

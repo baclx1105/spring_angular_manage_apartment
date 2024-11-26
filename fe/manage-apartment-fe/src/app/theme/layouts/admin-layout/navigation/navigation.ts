@@ -141,12 +141,27 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         icon: 'chrome'
       },
-
+      {
+        id: 'manage-employee',
+        title: 'Manage Employee',
+        type: 'item',
+        url: '/manage-employee',
+        classes: 'nav-item',
+        icon: 'chrome'
+      },
       {
         id: 'manage-apartment',
         title: 'Manage Apartment',
         type: 'item',
         url: '/manage-apartment',
+        classes: 'nav-item',
+        icon: 'chrome'
+      },
+      {
+        id: 'manage-bill',
+        title: 'Manage Bill',
+        type: 'item',
+        url: '/manage-bill',
         classes: 'nav-item',
         icon: 'chrome'
       }

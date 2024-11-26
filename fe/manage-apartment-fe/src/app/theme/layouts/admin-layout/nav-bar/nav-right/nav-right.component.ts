@@ -1,5 +1,5 @@
 // angular import
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 // project import
@@ -36,7 +36,13 @@ import {
   templateUrl: './nav-right.component.html',
   styleUrls: ['./nav-right.component.scss']
 })
-export class NavRightComponent {
+export class NavRightComponent implements OnInit {
+  username = ''
+
+  ngOnInit(): void {
+    this.username = localStorage.getItem('username');
+}
+
   @Input() styleSelectorToggle!: boolean;
   @Output() Customize = new EventEmitter();
   windowWidth: number;
