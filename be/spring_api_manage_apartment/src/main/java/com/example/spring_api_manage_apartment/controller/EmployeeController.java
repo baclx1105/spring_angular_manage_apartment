@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,15 +38,23 @@ public class EmployeeController {
     }
 
     @PostMapping
-    private void create(@RequestBody Employee employee) {
+    private ResponseEntity<?> create(@RequestBody Employee employee) {
+        if (employeeRepository.existsByCccd(employee.getCccd())) {
+            return ResponseEntity.status(409).body(HttpStatus.CONFLICT);
+        }
         employeeRepository.save(employee);
+        return ResponseEntity.ok().body(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    private void update(@PathVariable("id") Long id, @RequestBody Employee req) {
+    private ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody Employee req) {
         var employee = employeeRepository.findById(id).orElseThrow();
+        if (employeeRepository.existsByCccd(employee.getCccd())) {
+            return ResponseEntity.status(409).body(HttpStatus.CONFLICT);
+        }
         BeanUtils.copyProperties(req, employee);
         employeeRepository.save(employee);
+        return ResponseEntity.ok().body(HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

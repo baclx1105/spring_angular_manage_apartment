@@ -56,10 +56,14 @@ public class ResidentController {
     }
 
     @PutMapping("/{id}")
-    private void update(@PathVariable("id") Long id, @RequestBody Resident residentReq) {
+    private ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody Resident residentReq) {
         var resident = residentRepository.findById(id).orElseThrow();
+        if (residentRepository.existsByCccd(resident.getCccd())) {
+            return ResponseEntity.status(409).body(HttpStatus.CONFLICT);
+        }
         BeanUtils.copyProperties(residentReq, resident);
         residentRepository.save(resident);
+        return ResponseEntity.ok().body(HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
