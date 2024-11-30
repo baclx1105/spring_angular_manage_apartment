@@ -67,7 +67,7 @@ export class EditResidentComponent implements OnInit {
           console.log(res);
           this.router.navigate(['/manage-apartment']);
         },
-        error: (e) => console.error(e)
+        error: (e) => {alert("Not allow for dulicate numberOfApartment field"); console.error(e)}
       });
   }
 

@@ -51,7 +51,7 @@ export default class SamplePageComponent {
           workingTIme: '',
         }
       },
-      error: (e) => console.error(e)
+      error: (e) => {alert("Not allow for duplicate cccd field"); console.error(e)}
     });
   }
 }

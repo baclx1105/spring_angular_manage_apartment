@@ -55,7 +55,10 @@ export class EditResidentComponent implements OnInit {
           console.log(res);
           this.router.navigate(['/manage-resident']);
         },
-        error: (e) => console.error(e)
+        error: (e) => {
+          alert("Not allow for duplicate cccd field");
+          console.error(e)
+        }
       });
   }
 }

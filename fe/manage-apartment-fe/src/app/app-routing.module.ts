@@ -84,6 +84,22 @@ const routes: Routes = [
         path: 'manage-bill-view/:id',
         loadComponent: () => import('./demo/other/manage-bill-get/manage-bill-get.component').then(m => m.RootComponent)
       },
+      {
+        path: 'manage-report',
+        loadComponent: () => import('./demo/other/manage-report/manage-report.component').then(m => m.RootComponent)
+      },
+      {
+        path: 'manage-report-add',
+        loadComponent: () => import('./demo/other/manage-report-add/manage-report-add.component')
+      },
+      {
+        path: 'manage-report-edit/:id',
+        loadComponent: () => import('./demo/other/manage-report-edit/manage-report-edit.component').then(m => m.RootComponent)
+      },
+      {
+        path: 'manage-report-view/:id',
+        loadComponent: () => import('./demo/other/manage-report-get/manage-report-get.component').then(m => m.RootComponent)
+      },
     ]
   },
   {

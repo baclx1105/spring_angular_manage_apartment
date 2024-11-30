@@ -164,7 +164,15 @@ export const NavigationItems: NavigationItem[] = [
         url: '/manage-bill',
         classes: 'nav-item',
         icon: 'chrome'
-      }
+      },
+      {
+        id: 'manage-report',
+        title: 'Manage Report',
+        type: 'item',
+        url: '/manage-report',
+        classes: 'nav-item',
+        icon: 'chrome'
+      },
     ]
   },
 ];
