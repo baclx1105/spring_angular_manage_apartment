@@ -49,7 +49,7 @@ public class EmployeeController {
     @PutMapping("/{id}")
     private ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody Employee req) {
         var employee = employeeRepository.findById(id).orElseThrow();
-        if (employeeRepository.existsByCccd(employee.getCccd())) {
+        if (employeeRepository.existsByCccd(req.getCccd())) {
             return ResponseEntity.status(409).body(HttpStatus.CONFLICT);
         }
         BeanUtils.copyProperties(req, employee);

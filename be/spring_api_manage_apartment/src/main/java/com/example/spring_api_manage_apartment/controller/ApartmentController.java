@@ -62,7 +62,7 @@ public class ApartmentController {
     @PutMapping("/{id}")
     private ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody Apartment apartmentReq) {
         var apartment = apartmentRepository.findById(id).orElseThrow();
-        if (apartmentRepository.existsByNumberOfApartment(apartment.getNumberOfApartment())) {
+        if (apartmentRepository.existsByNumberOfApartment(apartmentReq.getNumberOfApartment())) {
             return ResponseEntity.status(409).body(HttpStatus.CONFLICT);
         }
         BeanUtils.copyProperties(apartmentReq, apartment);
